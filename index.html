@@ -1485,8 +1485,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
+ <section id="contact" class="section contact-section">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
             <div class="contact-content">
@@ -1533,12 +1532,21 @@
         </div>
     </section>
 
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2024 Sourav Sharma. Crafted with passion and Three.js</p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  (function(){
+      emailjs.init("ivo1olSGcP4aPhXdU"); // ✅ Your Public Key
+  })();
+</script>
+
 
     <!-- Scripts -->
     <script>
@@ -2040,7 +2048,7 @@
             }, 100);
         }
 
-        // Contact form
+        // Contact form - FIXED VERSION
         function initContactForm() {
             const contactForm = document.getElementById('contact-form');
             
@@ -2067,12 +2075,25 @@
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
                 
-                setTimeout(() => {
+                // Send email using EmailJS
+emailjs.send("service_sg599um", "template_lcm6s9q", {
+    from_name: name,
+    from_email: email,
+    subject: subject,
+    message: message
+})
+
+                .then(() => {
                     alert('Message sent successfully! Thank you for reaching out.');
                     contactForm.reset();
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                }, 2000);
+                }, (error) => {
+                    alert('Failed to send message. Please try again later or contact me directly at mr.sourav.sharma.01@gmail.com');
+                    console.error('EmailJS Error:', error);
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
             });
         }
 
